@@ -9,21 +9,19 @@ import json
 
 class Item(BaseModel):
     nome_filme: str
-class Video(BaseModel):
-    title: str
-    link: str
-    duration: str
+
 
 app = FastAPI()
 
 @app.post("/")
-def post_root(item: Item):
-    video: Video
+def post_root(item: Item):    
     results = YoutubeSearch("trailer " + item.nome_filme, max_results=1).to_json()
-    video.linklink = "https://www.youtube.com" + json.loads(results)["videos"][0]["url_suffix"]
-    video.linktitle = json.loads(results)["videos"][0]["title"]
-    video.linkduration = json.loads(results)["videos"][0]["duration"]   
-    return video
+    link = "https://www.youtube.com" + json.loads(results)["videos"][0]["url_suffix"]
+    title = json.loads(results)["videos"][0]["title"]
+    duration = json.loads(results)["videos"][0]["duration"]   
+    result = {"title": title,"link": link,"duration": duration }
+    
+    return result
 
 
 @app.get("/")
