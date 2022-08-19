@@ -7,23 +7,33 @@ import json
 
 # uvicorn main:app --reload  
 
-class Item(BaseModel):
-    nome_filme: str
-    tipo: Union[str, None] = None
-
+class Search(BaseModel):
+    movie_name: str
+    type: Union[str, None] = None
+    class Config:
+        schema_extra = {
+            "example": {
+                "movie_name": "Os Trapalhões",
+                "type": "Filme"
+            }
+        }
 
 app = FastAPI(    
     title='NassauFlix API',
     description='API desenvolvida para ser utilizada no projeto NassauFlix. Seu objetivo é converter nomes de Séries/Filmes em youtube links para ser apresentado na aplicação.')
 
 @app.post("/", tags=["Obter Links"])
-def post_root(item: Item):    
-    results = YoutubeSearch("trailer " + item.tipo + " " + item.nome_filme, max_results=1).to_json()
+def post_root(search: Search):  
+
+    if search.type is None:  
+        search.type = ""
+
+    results = YoutubeSearch("trailer " + search.type + " " + search.movie_name, max_results=1).to_json()
 
     link = "https://www.youtube.com" + json.loads(results)["videos"][0]["url_suffix"]
     title = json.loads(results)["videos"][0]["title"]
     duration = json.loads(results)["videos"][0]["duration"]   
-    
+
     result = {"title": title,"link": link,"duration": duration }
 
     return result
