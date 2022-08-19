@@ -9,22 +9,23 @@ import json
 
 class Item(BaseModel):
     nome_filme: str
+class Video(BaseModel):
+    title: str
+    link: str
+    duration: str
 
 app = FastAPI()
 
 @app.post("/")
 def post_root(item: Item):
+    video: Video
     results = YoutubeSearch("trailer " + item.nome_filme, max_results=1).to_json()
-    url = json.loads(results)["videos"][0]["url_suffix"]
-    link = "https://www.youtube.com" + url
-    return link
+    video.linklink = "https://www.youtube.com" + json.loads(results)["videos"][0]["url_suffix"]
+    video.linktitle = json.loads(results)["videos"][0]["title"]
+    video.linkduration = json.loads(results)["videos"][0]["duration"]   
+    return video
 
 
 @app.get("/")
 def read_root():
-    return {"Abra nassauflix.herokuapp/docs para ver as especificações da API"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+    return {"Abra nassauflix.herokuapp.com/docs para ver as especificações da API"}
