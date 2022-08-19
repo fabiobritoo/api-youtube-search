@@ -9,6 +9,7 @@ import json
 
 class Item(BaseModel):
     nome_filme: str
+    tipo: Union[str, None] = None
 
 
 app = FastAPI(    
@@ -17,10 +18,12 @@ app = FastAPI(
 
 @app.post("/", tags=["Obter Links"])
 def post_root(item: Item):    
-    results = YoutubeSearch("trailer " + item.nome_filme, max_results=1).to_json()
+    results = YoutubeSearch("trailer " + item.tipo + " " + item.nome_filme, max_results=1).to_json()
+
     link = "https://www.youtube.com" + json.loads(results)["videos"][0]["url_suffix"]
     title = json.loads(results)["videos"][0]["title"]
     duration = json.loads(results)["videos"][0]["duration"]   
+    
     result = {"title": title,"link": link,"duration": duration }
 
     return result
