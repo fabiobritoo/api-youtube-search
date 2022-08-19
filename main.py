@@ -22,7 +22,7 @@ def post_root(item: Item):
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Abra nassauflix.herokuapp/docs para ver as especificações da API"}
 
 
 @app.get("/items/{item_id}")
