@@ -12,5 +12,5 @@ def findYT(search):
 
     webbrowser.open_new(link)
 
-findYT("Home Alone")
+findYT("Hulk")
 

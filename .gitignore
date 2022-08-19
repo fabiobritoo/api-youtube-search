@@ -2,3 +2,4 @@ venv/
 trash/
 page.txt
 extract_links.ipynb
+__pycache__
