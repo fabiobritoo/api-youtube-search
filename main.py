@@ -11,7 +11,9 @@ class Item(BaseModel):
     nome_filme: str
 
 
-app = FastAPI()
+app = FastAPI(    
+    title='NassauFlix API',
+    description='API desenvolvida para ser utilizada no projeto NassauFlix. Seu objetivo é converter nomes de Séries/Filmes em youtube links para ser apresentado na aplicação.')
 
 @app.post("/")
 def post_root(item: Item):    
@@ -20,10 +22,10 @@ def post_root(item: Item):
     title = json.loads(results)["videos"][0]["title"]
     duration = json.loads(results)["videos"][0]["duration"]   
     result = {"title": title,"link": link,"duration": duration }
-    
+
     return result
 
 
-@app.get("/")
+@app.get("/", tags=["Endpoints"])
 def read_root():
     return {"Abra nassauflix.herokuapp.com/docs para ver as especificações da API"}
