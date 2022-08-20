@@ -53,8 +53,12 @@ def post_root(search: Search):
     link = "https://www.youtube.com" + json.loads(results)["videos"][0]["url_suffix"]
     title = json.loads(results)["videos"][0]["title"]
     duration = json.loads(results)["videos"][0]["duration"]   
-
-    result = {"title": title,"link": link,"duration": duration }
+    code = link.split('v=')[-1]
+    result = {
+        "title": title
+        ,"link": link
+        ,"code": code
+        ,"duration": duration }
 
     return result
 
