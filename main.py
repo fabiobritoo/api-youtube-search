@@ -1,6 +1,8 @@
 from typing import Union
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from pydantic import BaseModel
 from youtube_search import YoutubeSearch
 import json
@@ -31,6 +33,14 @@ class Platform(BaseModel):
 app = FastAPI(    
     title='NassauFlix API',
     description='API desenvolvida para ser utilizada no projeto NassauFlix. Seu objetivo é converter nomes de Séries/Filmes em youtube links para ser apresentado na aplicação.')
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/", tags=["Obter Links"])
 def post_root(search: Search):  
