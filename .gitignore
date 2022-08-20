@@ -3,3 +3,4 @@ trash/
 page.txt
 extract_links.ipynb
 __pycache__
+.ipynb_checkpoints/
